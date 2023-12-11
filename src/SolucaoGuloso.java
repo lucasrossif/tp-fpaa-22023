@@ -5,6 +5,7 @@ public class SolucaoGuloso {
     public static void executarSolucaoGulosa (int tamanhoT, int qtdCaminhoes) {
         long tempoTotalGulosoE1 = 0;
         long tempoTotalGulosoE2 = 0;
+        long tempoTotalGulosoE3 = 0;
 
         for (int i = tamanhoT; i <= tamanhoT*10; i += tamanhoT ){
             System.out.println("---Testando algoritmo guloso com conjuntos de tamanho " + i + "---");
@@ -24,11 +25,17 @@ public class SolucaoGuloso {
                 fimGuloso = System.currentTimeMillis();
                 tempoTotalGulosoE2 += (fimGuloso - inicioGuloso);
 
+                // Estratégia 3: ordenar as rotas em ordem crescente e ir distribuindo até chegar na média
+                inicioGuloso = System.currentTimeMillis();
+                SolucaoGuloso.executarGulosoMedia(rotasGuloso, qtdCaminhoes);
+                fimGuloso = System.currentTimeMillis();
+                tempoTotalGulosoE3 += (fimGuloso - inicioGuloso);
+
                 //System.out.println("Tempo de execução " + (0+j) + " da rota de tamanho " + i + ": " + (fimGuloso - inicioGuloso) + " ms");
             }
             System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 1: " + (tempoTotalGulosoE1/10) + " ms");
             System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 2: " + (tempoTotalGulosoE2/10) + " ms");
-
+            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 3: " + (tempoTotalGulosoE3/10) + " ms");
 
         }
     }
@@ -52,6 +59,8 @@ public class SolucaoGuloso {
             System.out.println("-----Resultado Estratégia 1----");
 //            System.out.println("Soma de kms rota: " + somaKmsRota);
 //            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
+            System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
+            System.out.println("Amplitude rota " + Util.calcularAmplitude(caminhoes));
             for (int i = 0; i < caminhoes.length; i++) {
                 System.out.println("Qtd kms caminhão " + (i+1) + ": " + caminhoes[i]);
             }
@@ -62,10 +71,10 @@ public class SolucaoGuloso {
     public static void executarGulosoDecrescente (List<int[]> rotas, int qtdCaminhoes) {
         // Estratégia 2 - Quilometragens em ordem decrescente
         for (int[] rota : rotas) {
-            int[] caminhoes = new int[3];
+            int[] caminhoes = new int[qtdCaminhoes];
             int somaKmsRota = Arrays.stream(rota).sum();
 
-            //Ordena o array em ordem crescente
+            //Ordena o array em ordem decrescente
             int[] rotaOrdenada = inverterArray(rota);
 
 
@@ -77,6 +86,44 @@ public class SolucaoGuloso {
             System.out.println("-----Resultado Estratégia 2----");
 //            System.out.println("Soma de kms rota: " + somaKmsRota);
 //            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
+            System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
+            System.out.println("Amplitude rota " + Util.calcularAmplitude(caminhoes));
+            for (int i = 0; i < caminhoes.length; i++) {
+                System.out.println("Qtd kms caminhão " + (i+1) + ": " + caminhoes[i]);
+            }
+        }
+    }
+
+    public static void executarGulosoMedia (List<int[]> rotas, int qtdCaminhoes) {
+        // Estratégia 3 - Quilometragens em ordem crescente
+        for (int[] rota : rotas) {
+            int[] caminhoes = new int[qtdCaminhoes];
+            int somaKmsRota = Arrays.stream(rota).sum();
+            int mediaKmsRota = somaKmsRota / qtdCaminhoes;
+
+            //Ordena o array em ordem crescente
+            //Arrays.sort(rota);
+
+            //Ordena o array em ordem decrescente
+            int[] rotaOrdenada = inverterArray(rota);
+
+            int caminhaoAtual = 0;
+            for (int km : rotaOrdenada) {
+                if (caminhoes[caminhaoAtual] + km <= mediaKmsRota) {
+                    caminhoes[caminhaoAtual] += km;
+                } else {
+                    if (caminhaoAtual != caminhoes.length - 1) caminhaoAtual++;
+                    caminhoes[caminhaoAtual] += km;
+                }
+
+            }
+
+            System.out.println("-----Resultado Estratégia 3----");
+            System.out.println("Soma de kms rota: " + somaKmsRota);
+            System.out.println("Média de kms rota: " + mediaKmsRota);
+            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
+            System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
+            System.out.println("Amplitude rota " + Util.calcularAmplitude(caminhoes));
             for (int i = 0; i < caminhoes.length; i++) {
                 System.out.println("Qtd kms caminhão " + (i+1) + ": " + caminhoes[i]);
             }
