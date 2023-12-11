@@ -12,9 +12,13 @@ public class Main {
             System.out.println(Arrays.toString(rota));
         }
 
-        int tamanhoT = 5;
-        SolucaoGuloso.executarSolucaoGulosa(tamanhoT, qtdCaminhoes);
+        Backtraking.executarSolucaoBacktracking(qtdCaminhoes);
 
+        // Tamanho que vem do backtracking
+        int tamanhoT = 5;
+
+        SolucaoGuloso.executarSolucaoGulosa(tamanhoT, qtdCaminhoes);
+        ProgDinamica.executarSolucaoProgDinamica(qtdCaminhoes);
 
 
     }
