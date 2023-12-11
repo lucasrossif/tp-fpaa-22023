@@ -1,17 +1,111 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.OptionalDouble;
+import java.util.*;
 
 public class SolucaoGuloso {
 
-    public static void executarGuloso(List<int[]> rotas) {
+    public static void executarSolucaoGulosa (int tamanhoT, int qtdCaminhoes) {
+        long tempoTotalGulosoE1 = 0;
+        long tempoTotalGulosoE2 = 0;
 
-        for (int[] rota : rotas){
-            int soma = Arrays.stream(rota).sum();
-            double media = Arrays.stream(rota).average().getAsDouble();
-            System.out.println("Rota " + Arrays.toString(rota) + ":\nSoma: " + soma + "\nMédia: " + media);
+        for (int i = tamanhoT; i <= tamanhoT*10; i += tamanhoT ){
+            System.out.println("---Testando algoritmo guloso com conjuntos de tamanho " + i + "---");
+
+            for (int j = 0; j < 10; j++){
+                List<int[]> rotasGuloso = GeradorDeProblemas.geracaoDeRotas(i,10,1.0);
+
+                // Estratégia 1: ordenar as rotas em ordem crescente
+                long inicioGuloso = System.currentTimeMillis();
+                SolucaoGuloso.executarGulosoCrescente(rotasGuloso, qtdCaminhoes);
+                long fimGuloso = System.currentTimeMillis();
+                tempoTotalGulosoE1 += (fimGuloso - inicioGuloso);
+
+                // Estratégia 2: ordenar as rotas em ordem decrescente
+                inicioGuloso = System.currentTimeMillis();
+                SolucaoGuloso.executarGulosoDecrescente(rotasGuloso, qtdCaminhoes);
+                fimGuloso = System.currentTimeMillis();
+                tempoTotalGulosoE2 += (fimGuloso - inicioGuloso);
+
+                //System.out.println("Tempo de execução " + (0+j) + " da rota de tamanho " + i + ": " + (fimGuloso - inicioGuloso) + " ms");
+            }
+            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 1: " + (tempoTotalGulosoE1/10) + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 2: " + (tempoTotalGulosoE2/10) + " ms");
+
 
         }
+    }
+
+    public static void executarGulosoCrescente(List<int[]> rotas, int qtdCaminhoes) {
+
+        // Estratégia 1 - Quilometragens em ordem crescente
+        for (int[] rota : rotas) {
+            int[] caminhoes = new int[qtdCaminhoes];
+            int somaKmsRota = Arrays.stream(rota).sum();
+
+            //Ordena o array em ordem crescente
+            Arrays.sort(rota);
+
+
+            for (int km : rota) {
+                int caminhaoMenosKm = encontrarCaminhaoMenosKm(caminhoes);
+                caminhoes[caminhaoMenosKm] += km;
+            }
+
+            System.out.println("-----Resultado Estratégia 1----");
+//            System.out.println("Soma de kms rota: " + somaKmsRota);
+//            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
+            for (int i = 0; i < caminhoes.length; i++) {
+                System.out.println("Qtd kms caminhão " + (i+1) + ": " + caminhoes[i]);
+            }
+        }
+
+    }
+
+    public static void executarGulosoDecrescente (List<int[]> rotas, int qtdCaminhoes) {
+        // Estratégia 2 - Quilometragens em ordem decrescente
+        for (int[] rota : rotas) {
+            int[] caminhoes = new int[3];
+            int somaKmsRota = Arrays.stream(rota).sum();
+
+            //Ordena o array em ordem crescente
+            int[] rotaOrdenada = inverterArray(rota);
+
+
+            for (int km : rotaOrdenada) {
+                int caminhaoMenosKm = encontrarCaminhaoMenosKm(caminhoes);
+                caminhoes[caminhaoMenosKm] += km;
+            }
+
+            System.out.println("-----Resultado Estratégia 2----");
+//            System.out.println("Soma de kms rota: " + somaKmsRota);
+//            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
+            for (int i = 0; i < caminhoes.length; i++) {
+                System.out.println("Qtd kms caminhão " + (i+1) + ": " + caminhoes[i]);
+            }
+        }
+    }
+
+
+    private static int encontrarCaminhaoMenosKm(int[] caminhoes) {
+        int indiceCaminhaoComMenosKm = 0;
+        int qtdKmsMenorCaminhao = Integer.MAX_VALUE;
+
+        for (int i = 0; i < caminhoes.length; i++) {
+            if (caminhoes[i] < qtdKmsMenorCaminhao) {
+                indiceCaminhaoComMenosKm = i;
+                qtdKmsMenorCaminhao = caminhoes[i];
+            }
+            //System.out.printf("Qtd caminhão %d: %d\n", i+1, caminhoes[i]);
+        }
+        //System.out.printf("Caminhão mais vazio com %d km em rotas: \n", caminhoes[indiceCaminhaoComMenosKm], indiceCaminhaoComMenosKm+1);
+        return indiceCaminhaoComMenosKm;
+    }
+
+    private static int[] inverterArray(int[] array) {
+        int[] sortedArray = Arrays.stream(array)
+                .boxed()
+                .sorted(Comparator.reverseOrder()) // just use 'sorted()' for ascending order
+                .mapToInt(Integer::intValue)
+                .toArray();
+
+        return sortedArray;
     }
 }
