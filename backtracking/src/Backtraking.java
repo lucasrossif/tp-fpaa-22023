@@ -4,8 +4,10 @@ import java.util.List;
 class Backtraking {
 
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
+
         for (int i = 0; i < 10; i++) {
-            List<int[]> conjuntoDeTeste = GeradorDeProblemas.geracaoDeRotas(10, 1, 1);
+            List<int[]> conjuntoDeTeste = GeradorDeProblemas.geracaoDeRotas(26, 1, 1);
             System.out.println("------- Conjunto de teste " + i + " -------");
             for (int[] rotas : conjuntoDeTeste) {
                 int meta = 0;
@@ -18,7 +20,14 @@ class Backtraking {
                 }
             }
         }
+
+        long endTime = System.currentTimeMillis();
+
+        long duration = endTime - startTime;
+        double durationInSeconds = duration / 1000.0;
+        System.out.println("Tempo de execução: " + durationInSeconds + " segundos");
     }
+
 
     public static List<List<Number>> backtracking(int[] rotas, int[] melhorKilometragem, List<List<Number>> solucoes,
             int meta, int iteratorRotas) {
@@ -56,11 +65,9 @@ class Backtraking {
         }
 
         for (List<Number> caminhao : solucoes) {
-            int kilometragemCaminhao = 0;
-            for (Number rota : caminhao) {
-                kilometragemCaminhao += rota.intValue();
-            }
-            if (Math.abs(kilometragemCaminhao - meta) > 1) {
+            int kilometragemCaminhao = caminhao.stream().mapToInt(Number::intValue).sum();
+
+            if (Math.abs(kilometragemCaminhao - meta) > 10) {
                 return false;
             }
         }
