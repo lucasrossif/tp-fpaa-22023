@@ -40,6 +40,40 @@ public class SolucaoGuloso {
         }
     }
 
+    public static void executarSolucaoGulosaApresentacao (List<int[]> rotasGuloso, int qtdCaminhoes) {
+        long tempoTotalGulosoE1 = 0;
+        long tempoTotalGulosoE2 = 0;
+        long tempoTotalGulosoE3 = 0;
+
+            for (int j = 0; j < 10; j++){
+
+                // Estratégia 1: ordenar as rotas em ordem crescente
+                long inicioGuloso = System.currentTimeMillis();
+                SolucaoGuloso.executarGulosoCrescente(rotasGuloso, qtdCaminhoes);
+                long fimGuloso = System.currentTimeMillis();
+                tempoTotalGulosoE1 += (fimGuloso - inicioGuloso);
+
+                // Estratégia 2: ordenar as rotas em ordem decrescente
+                inicioGuloso = System.currentTimeMillis();
+                SolucaoGuloso.executarGulosoDecrescente(rotasGuloso, qtdCaminhoes);
+                fimGuloso = System.currentTimeMillis();
+                tempoTotalGulosoE2 += (fimGuloso - inicioGuloso);
+
+                // Estratégia 3: ordenar as rotas em ordem crescente e ir distribuindo até chegar na média
+                inicioGuloso = System.currentTimeMillis();
+                SolucaoGuloso.executarGulosoMedia(rotasGuloso, qtdCaminhoes);
+                fimGuloso = System.currentTimeMillis();
+                tempoTotalGulosoE3 += (fimGuloso - inicioGuloso);
+
+                //System.out.println("Tempo de execução " + (0+j) + " da rota de tamanho " + i + ": " + (fimGuloso - inicioGuloso) + " ms");
+            }
+            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 1: " + (tempoTotalGulosoE1/10) + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 2: " + (tempoTotalGulosoE2/10) + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 3: " + (tempoTotalGulosoE3/10) + " ms");
+
+
+    }
+
     public static void executarGulosoCrescente(List<int[]> rotas, int qtdCaminhoes) {
 
         // Estratégia 1 - Quilometragens em ordem crescente
