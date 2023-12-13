@@ -44,7 +44,7 @@ public class DivisaoEConquista {
         return menorIndex;
     }
 
-    private static int calcularQuilometragem(List<Integer> rotas) {
+    public static int calcularQuilometragem(List<Integer> rotas) {
         int quilometragem = 0;
         for (int rota : rotas) {
             quilometragem += rota;
