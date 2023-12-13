@@ -3,18 +3,6 @@ import java.util.List;
 
 public class DivisaoEConquista {
 
-    public static void main(String[] args) {
-        int[] rotas = {32,51,32,43,42,30,42,51,43,51,29,25,27,32,29,55,43,29,32,44,55,29,53,30,24,27};
-        int numCaminhoes = 3;
-
-        List<List<Integer>> distribuicao = distribuirRotas(rotas, numCaminhoes);
-
-        for (int i = 0; i < distribuicao.size(); i++) {
-            System.out.println("Caminhão " + (i + 1) + ": rotas " + distribuicao.get(i) +
-                    " - total " + calcularQuilometragem(distribuicao.get(i)) + "km");
-        }
-    }
-
     public static List<List<Integer>> distribuirRotas(int[] rotas, int numCaminhoes) {
         List<List<Integer>> distribuicao = new ArrayList<>();
 
