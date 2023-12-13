@@ -13,11 +13,11 @@ public class TesteDivEConq {
             List<int[]> conjuntoDeRotas = GeradorDeProblemas.geracaoDeRotas(numRotas, 1, 0.5);
             int[] rotas = conjuntoDeRotas.get(0);
 
-            List<List<Integer>> distribuicao = DivEConq.distribuirRotas(rotas, numCaminhoes);
+            List<List<Integer>> distribuicao = DivisaoEConquista.distribuirRotas(rotas, numCaminhoes);
 
             for (int j = 0; j < distribuicao.size(); j++) {
                 System.out.println("Caminhão " + (j + 1) + ": rotas " + distribuicao.get(j) +
-                        " - total " + DivEConq.calcularQuilometragem(distribuicao.get(j)) + "km");
+                        " - total " + DivisaoEConquista.calcularQuilometragem(distribuicao.get(j)) + "km");
             }
 
             System.out.println("---------------");
