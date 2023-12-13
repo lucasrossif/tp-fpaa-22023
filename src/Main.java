@@ -34,19 +34,19 @@ public class Main {
         ProgDinamica.executarSolucaoProgDinamica(qtdCaminhoes);
 
         //Métodos que usam as rotas do Caram para a apresentação
-//        System.out.println("----- RESULTADOS APRESENTAÇÃO ------");
+        System.out.println("----- RESULTADOS APRESENTAÇÃO ------");
 
-//        System.out.println("---- Backtracking ----");
-//        Backtracking.executarSolucaoBacktrackingApresentacao(rotasCaram, qtdCaminhoes);
+        System.out.println("---- Backtracking ----");
+        Backtracking.executarSolucaoBacktrackingApresentacao(rotasCaram, qtdCaminhoes);
 
-//        System.out.println("---- Guloso ----");
-//        SolucaoGuloso.executarSolucaoGulosaApresentacao(rotasCaram, qtdCaminhoes);
-//
-//        System.out.println("---- Divisão e Conquista ----");
-//        DivisaoEConquista.executarDivisaoEConquistaApresentacao(rotasCaram, qtdCaminhoes);
-//
-//        System.out.println("---- Programação Dinâmica ----");
-//        ProgDinamica.executarSolucaoProgDinamicaApresentacao(rotasCaram, qtdCaminhoes);
+        System.out.println("---- Guloso ----");
+        SolucaoGuloso.executarSolucaoGulosaApresentacao(rotasCaram, qtdCaminhoes);
+
+        System.out.println("---- Divisão e Conquista ----");
+        DivisaoEConquista.executarDivisaoEConquistaApresentacao(rotasCaram, qtdCaminhoes);
+
+        System.out.println("---- Programação Dinâmica ----");
+        ProgDinamica.executarSolucaoProgDinamicaApresentacao(rotasCaram, qtdCaminhoes);
 
 
 
