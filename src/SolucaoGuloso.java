@@ -14,28 +14,28 @@ public class SolucaoGuloso {
                 List<int[]> rotasGuloso = GeradorDeProblemas.geracaoDeRotas(i,10,1.0);
 
                 // Estratégia 1: ordenar as rotas em ordem crescente
-                long inicioGuloso = System.currentTimeMillis();
+                long inicioGuloso = System.nanoTime();;
                 SolucaoGuloso.executarGulosoCrescente(rotasGuloso, qtdCaminhoes);
-                long fimGuloso = System.currentTimeMillis();
+                long fimGuloso = System.nanoTime();;
                 tempoTotalGulosoE1 += (fimGuloso - inicioGuloso);
 
                 // Estratégia 2: ordenar as rotas em ordem decrescente
-                inicioGuloso = System.currentTimeMillis();
+                inicioGuloso = System.nanoTime();;
                 SolucaoGuloso.executarGulosoDecrescente(rotasGuloso, qtdCaminhoes);
-                fimGuloso = System.currentTimeMillis();
+                fimGuloso = System.nanoTime();;
                 tempoTotalGulosoE2 += (fimGuloso - inicioGuloso);
 
                 // Estratégia 3: ordenar as rotas em ordem crescente e ir distribuindo até chegar na média
-                inicioGuloso = System.currentTimeMillis();
+                inicioGuloso = System.nanoTime();;
                 SolucaoGuloso.executarGulosoMedia(rotasGuloso, qtdCaminhoes);
-                fimGuloso = System.currentTimeMillis();
+                fimGuloso = System.nanoTime();;
                 tempoTotalGulosoE3 += (fimGuloso - inicioGuloso);
 
                 //System.out.println("Tempo de execução " + (0+j) + " da rota de tamanho " + i + ": " + (fimGuloso - inicioGuloso) + " ms");
             }
-            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 1: " + (tempoTotalGulosoE1/10) + " ms");
-            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 2: " + (tempoTotalGulosoE2/10) + " ms");
-            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 3: " + (tempoTotalGulosoE3/10) + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 1: " + (tempoTotalGulosoE1/10)/1000000.0 + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 2: " + (tempoTotalGulosoE2/10)/1000000.0 + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho " + i + " com estratégia 3: " + (tempoTotalGulosoE3/10)/1000000.0 + " ms");
 
         }
     }
@@ -48,28 +48,28 @@ public class SolucaoGuloso {
             for (int j = 0; j < 10; j++){
 
                 // Estratégia 1: ordenar as rotas em ordem crescente
-                long inicioGuloso = System.currentTimeMillis();
+                long inicioGuloso = System.nanoTime();;
                 SolucaoGuloso.executarGulosoCrescente(rotasGuloso, qtdCaminhoes);
-                long fimGuloso = System.currentTimeMillis();
+                long fimGuloso = System.nanoTime();;
                 tempoTotalGulosoE1 += (fimGuloso - inicioGuloso);
 
                 // Estratégia 2: ordenar as rotas em ordem decrescente
-                inicioGuloso = System.currentTimeMillis();
+                inicioGuloso = System.nanoTime();;
                 SolucaoGuloso.executarGulosoDecrescente(rotasGuloso, qtdCaminhoes);
-                fimGuloso = System.currentTimeMillis();
+                fimGuloso = System.nanoTime();;
                 tempoTotalGulosoE2 += (fimGuloso - inicioGuloso);
 
                 // Estratégia 3: ordenar as rotas em ordem crescente e ir distribuindo até chegar na média
-                inicioGuloso = System.currentTimeMillis();
+                inicioGuloso = System.nanoTime();;
                 SolucaoGuloso.executarGulosoMedia(rotasGuloso, qtdCaminhoes);
-                fimGuloso = System.currentTimeMillis();
+                fimGuloso = System.nanoTime();;
                 tempoTotalGulosoE3 += (fimGuloso - inicioGuloso);
 
                 //System.out.println("Tempo de execução " + (0+j) + " da rota de tamanho " + i + ": " + (fimGuloso - inicioGuloso) + " ms");
             }
-            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 1: " + (tempoTotalGulosoE1/10) + " ms");
-            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 2: " + (tempoTotalGulosoE2/10) + " ms");
-            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 3: " + (tempoTotalGulosoE3/10) + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 1: " + (tempoTotalGulosoE1/10)/1000000.0 + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 2: " + (tempoTotalGulosoE2/10)/1000000.0 + " ms");
+            System.out.println("Média de tempo de execução da rota de tamanho com estratégia 3: " + (tempoTotalGulosoE3/10)/1000000.0 + " ms");
 
 
     }
@@ -93,7 +93,7 @@ public class SolucaoGuloso {
             System.out.println("-----Resultado Estratégia 1----");
 //            System.out.println("Soma de kms rota: " + somaKmsRota);
 //            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
-            System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
+//            System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
             System.out.println("Amplitude rota " + Util.calcularAmplitude(caminhoes));
             for (int i = 0; i < caminhoes.length; i++) {
                 System.out.println("Qtd kms caminhão " + (i+1) + ": " + caminhoes[i]);

@@ -1,24 +1,54 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-class Backtraking {
+class Backtracking {
 
     public static void executarSolucaoBacktracking (int qtdCaminhoes) {
-        for (int i = 0; i < 10; i++) {
-            List<int[]> conjuntoDeTeste = GeradorDeProblemas.geracaoDeRotas(10, 1, 1);
-            System.out.println("------- Conjunto de teste " + i + " -------");
-            for (int[] rotas : conjuntoDeTeste) {
-                int meta = 0;
-                for (int rota : rotas) {
-                    meta += rota;
-                }
-                List<List<Number>> caminhoes = backtracking(rotas, new int[qtdCaminhoes], new ArrayList<>(), meta / qtdCaminhoes, 0);
-                for (List<Number> caminhao : caminhoes) {
-                    System.out.println(caminhao);
-                }
+        long startTime = System.currentTimeMillis();
+
+        List<int[]> conjuntoDeTeste = GeradorDeProblemas.geracaoDeRotas(10, 10, 1);
+
+        for(int i = 0; i < conjuntoDeTeste.size(); i++) {
+            long startTime2 = System.currentTimeMillis();
+            System.out.println("------------" + "Conjunto de teste " + (i + 1) + "------------" );
+
+            int[] rotas = conjuntoDeTeste.get(i);
+            int meta = 0;
+
+            for (int rota : rotas) {
+                meta += rota;
             }
+            List<List<Number>> caminhoes = backtracking(rotas, new int[qtdCaminhoes], new ArrayList<>(), meta / qtdCaminhoes, 0);
+
+            int[] totalParaRotas = new int[3];
+
+            for(int j = 0; j < caminhoes.size(); j++) {
+                System.out.println("Caminhão " + (j + 1) + ": " + caminhoes.get(j));
+                totalParaRotas[j] = caminhoes.get(j).stream().mapToInt(Number::intValue).sum();
+            }
+
+            System.out.println("Total para rotas: " + Arrays.toString(totalParaRotas));
+            System.out.println("Desvio padrão: " + calcularDesvioPadrao(totalParaRotas));
+            System.out.println("Amplitude: " + calcularAmplitude(totalParaRotas));
+
+
+            long endTime2 = System.currentTimeMillis();
+
+            long duration2 = endTime2 - startTime2;
+            double durationInSeconds2 = duration2 / 1000.0;
+            System.out.println("Tempo de execução atual: " + durationInSeconds2 + " segundos");
+
         }
+
+        System.out.println("------------" + "Fim dos testes" + "------------");
+        long endTime = System.currentTimeMillis();
+
+        long duration = endTime - startTime;
+        double durationInSeconds = duration / 1000.0;
+        System.out.println("Tempo de execução geral: " + durationInSeconds + " segundos");
     }
+
 
     public static List<List<Number>> backtracking(int[] rotas, int[] melhorKilometragem, List<List<Number>> solucoes,
                                                   int meta, int iteratorRotas) {
@@ -56,16 +86,96 @@ class Backtraking {
         }
 
         for (List<Number> caminhao : solucoes) {
-            int kilometragemCaminhao = 0;
-            for (Number rota : caminhao) {
-                kilometragemCaminhao += rota.intValue();
-            }
-            if (Math.abs(kilometragemCaminhao - meta) > 1) {
+            int kilometragemCaminhao = caminhao.stream().mapToInt(Number::intValue).sum();
+
+            if (Math.abs(kilometragemCaminhao - meta) >= 2) {
                 return false;
             }
         }
 
         return true;
     }
+
+    public static double calcularDesvioPadrao(int[] array) {
+        double soma = 0;
+        for (int valor : array) {
+            soma += valor;
+        }
+        double media = soma / array.length;
+
+        double somaQuadradosDiferencas = 0;
+        for (int valor : array) {
+            double diferenca = valor - media;
+            somaQuadradosDiferencas += diferenca * diferenca;
+        }
+
+        double variancia = somaQuadradosDiferencas / array.length;
+
+
+        return Math.sqrt(variancia);
+    }
+
+    public static int calcularAmplitude(int[] array) {
+        if (array.length == 0) {
+            throw new IllegalArgumentException("O array não pode estar vazio.");
+        }
+
+        int menorValor = array[0];
+        int maiorValor = array[0];
+
+        for (int valor : array) {
+            if (valor < menorValor) {
+                menorValor = valor;
+            } else if (valor > maiorValor) {
+                maiorValor = valor;
+            }
+        }
+
+        return maiorValor - menorValor;
+    }
+
+    public static void executarSolucaoBacktrackingApresentacao (List<int[]> conjuntoDeTeste, int qtdCaminhoes) {
+        long startTime = System.currentTimeMillis();
+
+        for(int i = 0; i < conjuntoDeTeste.size(); i++) {
+            long startTime2 = System.currentTimeMillis();
+            System.out.println("------------" + "Conjunto de teste " + (i + 1) + "------------" );
+
+            int[] rotas = conjuntoDeTeste.get(i);
+            int meta = 0;
+
+            for (int rota : rotas) {
+                meta += rota;
+            }
+            List<List<Number>> caminhoes = backtracking(rotas, new int[qtdCaminhoes], new ArrayList<>(), meta / qtdCaminhoes, 0);
+
+            int[] totalParaRotas = new int[3];
+
+            for(int j = 0; j < caminhoes.size(); j++) {
+                System.out.println("Caminhão " + (j + 1) + ": " + caminhoes.get(j));
+                totalParaRotas[j] = caminhoes.get(j).stream().mapToInt(Number::intValue).sum();
+            }
+
+            System.out.println("Total para rotas: " + Arrays.toString(totalParaRotas));
+            System.out.println("Desvio padrão: " + calcularDesvioPadrao(totalParaRotas));
+            System.out.println("Amplitude: " + calcularAmplitude(totalParaRotas));
+
+
+            long endTime2 = System.currentTimeMillis();
+
+            long duration2 = endTime2 - startTime2;
+            double durationInSeconds2 = duration2 / 1000.0;
+            System.out.println("Tempo de execução atual: " + durationInSeconds2 + " segundos");
+
+        }
+
+        System.out.println("------------" + "Fim dos testes" + "------------");
+        long endTime = System.currentTimeMillis();
+
+        long duration = endTime - startTime;
+        double durationInSeconds = duration / 1000.0;
+        System.out.println("Tempo de execução geral: " + durationInSeconds + " segundos");
+    }
+
 
 }

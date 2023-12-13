@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -14,19 +13,41 @@ public class Main {
         rotasCaram.add(rota1);
         rotasCaram.add(rota2);
 
+        System.out.println("----- RESULTADOS RELATÓRIO ------");
         //Métodos para montar o relatório
-        Backtraking.executarSolucaoBacktracking(qtdCaminhoes);
+        System.out.println("---- Relatório: Backtracking ----");
+        Backtracking.executarSolucaoBacktracking(qtdCaminhoes);
 
         // Tamanho T máximo representa a quantidade de rotas que, no backtracking,
         // não ultrapassou 30 segundos.
-        int tamanhoT = 25;
+        int tamanhoT = 22;
 
         //Métodos para montar o relatório
+
+        System.out.println("---- Relatório: Guloso ----");
         SolucaoGuloso.executarSolucaoGulosa(tamanhoT, qtdCaminhoes);
+
+        System.out.println("---- Relatório: Divisão e Conquista ----");
+        DivisaoEConquista.executarDivisaoEConquista(qtdCaminhoes);
+
+        System.out.println("---- Relatório: Programação Dinâmica ----");
         ProgDinamica.executarSolucaoProgDinamica(qtdCaminhoes);
 
-        //Método que usa as rotas do Caram para a apresentação
-        SolucaoGuloso.executarSolucaoGulosaApresentacao(rotasCaram, qtdCaminhoes);
+        //Métodos que usam as rotas do Caram para a apresentação
+//        System.out.println("----- RESULTADOS APRESENTAÇÃO ------");
+
+//        System.out.println("---- Backtracking ----");
+//        Backtracking.executarSolucaoBacktrackingApresentacao(rotasCaram, qtdCaminhoes);
+
+//        System.out.println("---- Guloso ----");
+//        SolucaoGuloso.executarSolucaoGulosaApresentacao(rotasCaram, qtdCaminhoes);
+//
+//        System.out.println("---- Divisão e Conquista ----");
+//        DivisaoEConquista.executarDivisaoEConquistaApresentacao(rotasCaram, qtdCaminhoes);
+//
+//        System.out.println("---- Programação Dinâmica ----");
+//        ProgDinamica.executarSolucaoProgDinamicaApresentacao(rotasCaram, qtdCaminhoes);
+
 
 
     }

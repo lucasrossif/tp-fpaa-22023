@@ -3,32 +3,125 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProgDinamica {
-    public static void executarSolucaoProgDinamica (int qtdCaminhoes){
-        List<int[]> rotasGeradas = GeradorDeProblemas.geracaoDeRotas(10, 1, 1);
+    public static void executarSolucaoProgDinamica(int qtdCaminhoes) {
+        final int tamConjunto = 10;
 
-        List<Integer> set = new ArrayList<>(Arrays.stream(rotasGeradas.get(0))
+        List<int[]> rotasGeradas = GeradorDeProblemas.geracaoDeRotas(220, tamConjunto, 1);
+
+        List<List<DtoResposta>> respostas = new ArrayList<>();
+
+        for (int[] rotasGerada : rotasGeradas) {
+            respostas.add(getRotas(qtdCaminhoes, rotasGerada));
+        }
+
+        int numConjunto = 1;
+        double mediaTempoTotal = 0.0;
+        double desvioPadraoTotal = 0.0;
+        int amplitudeTotal = 0;
+        // Imprimir Relatório
+        for (List<DtoResposta> conjunto : respostas) {
+            int[] totaisRotas = conjunto.stream()
+                    .mapToInt(resCaminhoes -> resCaminhoes.rota().total())
+                    .toArray();
+
+            double mediaTempo = conjunto.stream()
+                    .mapToDouble(DtoResposta::timmer)
+                    .average()
+                    .orElse(-1);
+
+            double desvioPadrao = Util.calcularDesvioPadrao(totaisRotas);
+            int amplitude = Util.calcularAmplitude(totaisRotas);
+
+            mediaTempoTotal += mediaTempo;
+            desvioPadraoTotal += desvioPadrao;
+            amplitudeTotal += amplitude;
+
+            System.out.println("Conjunto (" + (numConjunto++) + ")");
+            System.out.println("Totais de rota: " + Arrays.toString(totaisRotas));
+            System.out.println("Desvio Padrão: " + desvioPadrao);
+            System.out.println("Amplitude: " + amplitude);
+            System.out.println("Media tempo (ms): " + mediaTempo);
+            System.out.println();
+        }
+        System.out.println("===================================");
+        System.out.println();
+        System.out.println("[Total] Desvio Padrão: " + desvioPadraoTotal / tamConjunto);
+        System.out.println("[Total] Amplitude: " + amplitudeTotal / tamConjunto);
+        System.out.println("[Total] Media tempo (ms): " + mediaTempoTotal / tamConjunto);
+    }
+
+    private static List<DtoResposta> getRotas(int caminhoes, int[] array) {
+        List<Integer> set = new ArrayList<>(Arrays.stream(array)
                 .boxed()
                 .toList());
-        // Calcula o ideal para cada um, e arredonda, evitando decimais
-        int sum = (int) Math.round(set.stream().mapToDouble(a -> a).sum()/qtdCaminhoes);
+        List<DtoResposta> respostas = new ArrayList<>();
+        int sum = (int) Math.ceil(set.stream().mapToDouble(a -> a).sum() / caminhoes);
 
-        System.out.println("Initial: " + set);
+        for (int i = 0; i < caminhoes; i++) {
+            String label = "Caminhão " + (i + 1);
 
-        for (int i = 0; i < qtdCaminhoes; i++) {
-            System.out.println("Caminhão " + (i+1));
+            double timmer = System.nanoTime();
             boolean[][] subsetSum = GFG.subsetSum(set, sum);
             Rota rota = GFG.getResults(set, subsetSum);
-            System.out.println(rota.rotas());
-            System.out.println(rota.total());
+            timmer = System.nanoTime() - timmer;
+
+            respostas.add(new DtoResposta(label, rota, timmer / 1000000));
 
             // Garantimos que removemos apenas 1
-            for (int r: rota.rotas()) {
+            for (int r : rota.rotas()) {
                 set.remove(set.indexOf(r));
             }
 
             // Garante margem de erro que não foi suprida
             sum += sum - rota.total();
-            System.out.println("====================");
         }
+        return respostas;
+    }
+
+    public static void executarSolucaoProgDinamicaApresentacao(List<int[]> conjuntoDeTeste, int qtdCaminhoes) {
+
+        final int tamConjunto = 2;
+
+        List<List<DtoResposta>> respostas = new ArrayList<>();
+
+        for (int[] rotasGerada : conjuntoDeTeste) {
+            respostas.add(getRotas(qtdCaminhoes, rotasGerada));
+        }
+
+        int numConjunto = 1;
+        double mediaTempoTotal = 0.0;
+        double desvioPadraoTotal = 0.0;
+        int amplitudeTotal = 0;
+        // Imprimir Relatório
+        for (List<DtoResposta> conjunto : respostas) {
+            int[] totaisRotas = conjunto.stream()
+                    .mapToInt(resCaminhoes -> resCaminhoes.rota().total())
+                    .toArray();
+
+            double mediaTempo = conjunto.stream()
+                    .mapToDouble(DtoResposta::timmer)
+                    .average()
+                    .orElse(-1);
+
+            double desvioPadrao = Util.calcularDesvioPadrao(totaisRotas);
+            int amplitude = Util.calcularAmplitude(totaisRotas);
+
+            mediaTempoTotal += mediaTempo;
+            desvioPadraoTotal += desvioPadrao;
+            amplitudeTotal += amplitude;
+
+            System.out.println("Conjunto (" + (numConjunto++) + ")");
+            System.out.println("Totais de rota: " + Arrays.toString(totaisRotas));
+            System.out.println("Desvio Padrão: " + desvioPadrao);
+            System.out.println("Amplitude: " + amplitude);
+            System.out.println("Media tempo (ms): " + mediaTempo);
+            System.out.println();
+        }
+        System.out.println("===================================");
+        System.out.println();
+        System.out.println("[Total] Desvio Padrão: " + desvioPadraoTotal / tamConjunto);
+        System.out.println("[Total] Amplitude: " + amplitudeTotal / tamConjunto);
+        System.out.println("[Total] Media tempo (ms): " + mediaTempoTotal / tamConjunto);
+
     }
 }
