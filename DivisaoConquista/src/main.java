@@ -5,7 +5,7 @@ public class main {
     public static void main(String[] args) {
         int numConjuntos = 10;
         int numCaminhoes = 3;
-        int numRotas = 25;
+        int numRotas = 22;
 
         long tempoTotal = 0;
         long menorTempo = Long.MAX_VALUE;
