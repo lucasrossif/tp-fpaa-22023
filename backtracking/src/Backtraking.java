@@ -5,15 +5,15 @@ import java.util.List;
 class Backtraking {
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
 
-//        List<int[]> conjuntoDeTeste = GeradorDeProblemas.geracaoDeRotas(10, 10, 1);
-        List<int[]> conjuntoDeTeste = List.of(
-                new int[]{40,36,38,29,32,28,31,35,31,30,32,30,29,39,35,38,39,35,32,38,32,33,29,33,29,39,28},
-                new int[]{32,51,32,43,42,30,42,51,43,51,29,25,27,32,29,55,43,29,32,44,55,29,53,30,24,27});
+        List<int[]> conjuntoDeTeste = GeradorDeProblemas.geracaoDeRotas(22, 10, 1);
+//        List<int[]> conjuntoDeTeste = List.of(
+//                new int[]{40,36,38,29,32,28,31,35,31,30,32,30,29,39,35,38,39,35,32,38,32,33,29,33,29,39,28},
+//                new int[]{32,51,32,43,42,30,42,51,43,51,29,25,27,32,29,55,43,29,32,44,55,29,53,30,24,27});
 
         for(int i = 0; i < conjuntoDeTeste.size(); i++) {
-            long startTime2 = System.currentTimeMillis();
+            long startTime2 = System.nanoTime();
             System.out.println("------------" + "Conjunto de teste " + (i + 1) + "------------" );
 
             int[] rotas = conjuntoDeTeste.get(i);
@@ -39,8 +39,8 @@ class Backtraking {
             long endTime2 = System.currentTimeMillis();
 
             long duration2 = endTime2 - startTime2;
-            double durationInSeconds2 = duration2 / 1000.0;
-            System.out.println("Tempo de execução atual: " + durationInSeconds2 + " segundos");
+            double durationInSeconds2 = duration2 / 1000000;
+            System.out.println("Tempo de execução atual: " + (durationInSeconds2*-1) + " milisegundos");
 
         }
 
@@ -48,8 +48,8 @@ class Backtraking {
         long endTime = System.currentTimeMillis();
 
         long duration = endTime - startTime;
-        double durationInSeconds = duration / 1000.0;
-        System.out.println("Tempo de execução geral: " + durationInSeconds + " segundos");
+        double durationInSeconds = duration / 1000000;
+        System.out.println("Tempo de execução geral: " + (durationInSeconds * -1) + " milisegundos");
     }
 
 
@@ -91,7 +91,7 @@ class Backtraking {
         for (List<Number> caminhao : solucoes) {
             int kilometragemCaminhao = caminhao.stream().mapToInt(Number::intValue).sum();
 
-            if (Math.abs(kilometragemCaminhao - meta) >= 1) {
+            if (Math.abs(kilometragemCaminhao - meta) >= 2) {
                 return false;
             }
         }
