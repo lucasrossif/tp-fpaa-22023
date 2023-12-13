@@ -28,7 +28,7 @@ public class main {
             long tempoFinal = System.nanoTime();
             long tempoConjunto = tempoFinal - tempoInicial;
 
-            System.out.println("Tempo do conjunto " + (i + 1) + ": " + tempoConjunto + " nanossegundos");
+            System.out.println("Tempo do conjunto " + (i + 1) + ": " + tempoConjunto/1000000. + " milissegundos");
 
             // Calcular amplitude
             long amplitudeConjunto = calcularAmplitude(distribuicao);
@@ -54,7 +54,7 @@ public class main {
         long mediaAmplitudeFinal = somaAmplitudes / numConjuntos;
 
         System.out.println("Média de Amplitude Final: " + mediaAmplitudeFinal + " km");
-        System.out.println("Média de Tempo Final: " + (tempoTotal / numConjuntos) + " nanossegundos");
+        System.out.println("Média de Tempo Final: " + ((tempoTotal / numConjuntos)/1000000.) + " milissegundos");
     }
 
     private static long calcularAmplitude(List<List<Integer>> distribuicao) {
