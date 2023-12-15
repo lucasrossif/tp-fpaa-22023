@@ -15,7 +15,7 @@ public class ProgDinamica {
         }
 
         int numConjunto = 1;
-        double mediaTempoTotal = 0.0;
+        double tempoTotal = 0.0;
         double desvioPadraoTotal = 0.0;
         int amplitudeTotal = 0;
         // Imprimir Relatório
@@ -24,15 +24,14 @@ public class ProgDinamica {
                     .mapToInt(resCaminhoes -> resCaminhoes.rota().total())
                     .toArray();
 
-            double mediaTempo = conjunto.stream()
+            double tempo = conjunto.stream()
                     .mapToDouble(DtoResposta::timmer)
-                    .average()
-                    .orElse(-1);
+                    .sum();
 
             double desvioPadrao = Util.calcularDesvioPadrao(totaisRotas);
             int amplitude = Util.calcularAmplitude(totaisRotas);
 
-            mediaTempoTotal += mediaTempo;
+            tempoTotal += tempo;
             desvioPadraoTotal += desvioPadrao;
             amplitudeTotal += amplitude;
 
@@ -40,14 +39,14 @@ public class ProgDinamica {
             System.out.println("Totais de rota: " + Arrays.toString(totaisRotas));
             System.out.println("Desvio Padrão: " + desvioPadrao);
             System.out.println("Amplitude: " + amplitude);
-            System.out.println("Media tempo (ms): " + mediaTempo);
+            System.out.println("Tempo (ms): " + tempo);
             System.out.println();
         }
         System.out.println("===================================");
         System.out.println();
         System.out.println("[Total] Desvio Padrão: " + desvioPadraoTotal / tamConjunto);
         System.out.println("[Total] Amplitude: " + amplitudeTotal / tamConjunto);
-        System.out.println("[Total] Media tempo (ms): " + mediaTempoTotal / tamConjunto);
+        System.out.println("[Total] Media tempo (ms): " + tempoTotal/tamConjunto);
     }
 
     private static List<DtoResposta> getRotas(int caminhoes, int[] array) {
@@ -89,7 +88,7 @@ public class ProgDinamica {
         }
 
         int numConjunto = 1;
-        double mediaTempoTotal = 0.0;
+        double tempoTotal = 0.0;
         double desvioPadraoTotal = 0.0;
         int amplitudeTotal = 0;
         // Imprimir Relatório
@@ -98,15 +97,14 @@ public class ProgDinamica {
                     .mapToInt(resCaminhoes -> resCaminhoes.rota().total())
                     .toArray();
 
-            double mediaTempo = conjunto.stream()
+            double tempo = conjunto.stream()
                     .mapToDouble(DtoResposta::timmer)
-                    .average()
-                    .orElse(-1);
+                    .sum();
 
             double desvioPadrao = Util.calcularDesvioPadrao(totaisRotas);
             int amplitude = Util.calcularAmplitude(totaisRotas);
 
-            mediaTempoTotal += mediaTempo;
+            tempoTotal += tempo;
             desvioPadraoTotal += desvioPadrao;
             amplitudeTotal += amplitude;
 
@@ -114,14 +112,14 @@ public class ProgDinamica {
             System.out.println("Totais de rota: " + Arrays.toString(totaisRotas));
             System.out.println("Desvio Padrão: " + desvioPadrao);
             System.out.println("Amplitude: " + amplitude);
-            System.out.println("Media tempo (ms): " + mediaTempo);
+            System.out.println("Tempo (ms): " + tempo);
             System.out.println();
         }
         System.out.println("===================================");
         System.out.println();
         System.out.println("[Total] Desvio Padrão: " + desvioPadraoTotal / tamConjunto);
         System.out.println("[Total] Amplitude: " + amplitudeTotal / tamConjunto);
-        System.out.println("[Total] Media tempo (ms): " + mediaTempoTotal / tamConjunto);
+        System.out.println("[Total] Media tempo (ms): " + tempoTotal/tamConjunto);
 
     }
 }

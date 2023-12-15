@@ -75,9 +75,9 @@ public class SolucaoGuloso {
     }
 
     public static void executarGulosoCrescente(List<int[]> rotas, int qtdCaminhoes) {
-
         // Estratégia 1 - Quilometragens em ordem crescente
         for (int[] rota : rotas) {
+            System.out.println("Rota: " + Arrays.toString(rota));
             int[] caminhoes = new int[qtdCaminhoes];
             int somaKmsRota = Arrays.stream(rota).sum();
 
@@ -91,9 +91,10 @@ public class SolucaoGuloso {
             }
 
             System.out.println("-----Resultado Estratégia 1----");
-//            System.out.println("Soma de kms rota: " + somaKmsRota);
-//            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
-//            System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
+
+           System.out.println("Soma de kms rota: " + somaKmsRota);
+              System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
+              System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
             System.out.println("Amplitude rota " + Util.calcularAmplitude(caminhoes));
             for (int i = 0; i < caminhoes.length; i++) {
                 System.out.println("Qtd kms caminhão " + (i+1) + ": " + caminhoes[i]);
@@ -105,6 +106,7 @@ public class SolucaoGuloso {
     public static void executarGulosoDecrescente (List<int[]> rotas, int qtdCaminhoes) {
         // Estratégia 2 - Quilometragens em ordem decrescente
         for (int[] rota : rotas) {
+            System.out.println("Rota: " + Arrays.toString(rota));
             int[] caminhoes = new int[qtdCaminhoes];
             int somaKmsRota = Arrays.stream(rota).sum();
 
@@ -118,8 +120,8 @@ public class SolucaoGuloso {
             }
 
             System.out.println("-----Resultado Estratégia 2----");
-//            System.out.println("Soma de kms rota: " + somaKmsRota);
-//            System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
+            System.out.println("Soma de kms rota: " + somaKmsRota);
+           System.out.println("Soma de kms caminhões: " + Arrays.stream(caminhoes).sum());
             System.out.println("Desvio padrão rota " + Util.calcularDesvioPadrao(caminhoes));
             System.out.println("Amplitude rota " + Util.calcularAmplitude(caminhoes));
             for (int i = 0; i < caminhoes.length; i++) {
@@ -131,6 +133,7 @@ public class SolucaoGuloso {
     public static void executarGulosoMedia (List<int[]> rotas, int qtdCaminhoes) {
         // Estratégia 3 - Quilometragens em ordem crescente
         for (int[] rota : rotas) {
+            System.out.println("Rota: " + Arrays.toString(rota));
             int[] caminhoes = new int[qtdCaminhoes];
             int somaKmsRota = Arrays.stream(rota).sum();
             int mediaKmsRota = somaKmsRota / qtdCaminhoes;
